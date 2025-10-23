@@ -49,6 +49,7 @@ func main() {
 
 	// site route group
 	routes.TokenRouter(apiGroup)
+	routes.UserDataRouter(apiGroup)
 
 	logrus.Fatal(app.Listen(fmt.Sprintf("127.0.0.1:%s", os.Getenv("PRODUCTION_PORT"))))
 }
