@@ -2,21 +2,17 @@ package main
 
 import (
 	"fmt"
+	"kurohelper-api/middlware"
+	"kurohelper-api/routes"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 
 	kurohelperdb "github.com/peter910820/kurohelper-db"
 	"github.com/peter910820/kurohelper-db/models"
-)
-
-var (
-	// store
-	store *session.Store
+	"github.com/peter910820/kurohelper-db/repository"
 )
 
 func init() {
@@ -44,13 +40,26 @@ func main() {
 	kurohelperdb.InitDsn(config)
 	kurohelperdb.Migration() // 選填
 
+	initTokenCache()
+
 	app := fiber.New()
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     os.Getenv("CORS_URL"),
-		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH",
-		AllowHeaders:     "Origin,Content-Type,Accept",
-		AllowCredentials: true,
-	}))
+
+	// api route group
+	apiGroup := app.Group("/api") // main api route group
+
+	// site route group
+	routes.TokenRouter(apiGroup)
 
 	logrus.Fatal(app.Listen(fmt.Sprintf("127.0.0.1:%s", os.Getenv("PRODUCTION_PORT"))))
+}
+
+func initTokenCache() {
+	webAPIToken, err := repository.GetWebAPIToken()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	for _, t := range webAPIToken {
+		middlware.VaildToken[t.ID] = struct{}{}
+	}
 }
