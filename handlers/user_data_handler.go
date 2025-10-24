@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"net/url"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/peter910820/kurohelper-db/repository"
 	"github.com/sirupsen/logrus"
@@ -10,13 +8,7 @@ import (
 
 func GetUserDataHandler(c *fiber.Ctx) error {
 	// URL decoding
-	id, err := url.QueryUnescape(c.Params("id"))
-	if err != nil {
-		logrus.Error(err)
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err,
-		})
-	}
+	id := c.Query("id")
 
 	userGames, err := repository.GetUserData(id)
 	if err != nil {
