@@ -25,7 +25,7 @@ func TokensGenerateHandler(c *fiber.Ctx) error {
 	// 寫到快取
 	middlware.VaildToken[id.String()] = struct{}{}
 
-	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message": "token generated successfully",
 		"token":   id.String(),
 	})

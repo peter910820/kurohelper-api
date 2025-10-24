@@ -18,7 +18,7 @@ func GetUserDataHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message": "search successfully",
 		"data":    userGames,
 	})
