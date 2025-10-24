@@ -48,7 +48,7 @@ func main() {
 	apiGroup := app.Group("/api") // main api route group
 
 	// site route group
-	routes.TokenRouter(apiGroup)
+	// routes.TokenRouter(apiGroup)
 	routes.UserDataRouter(apiGroup)
 
 	logrus.Fatal(app.Listen(fmt.Sprintf("127.0.0.1:%s", os.Getenv("PRODUCTION_PORT"))))
