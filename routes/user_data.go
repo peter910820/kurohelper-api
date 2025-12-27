@@ -12,6 +12,6 @@ func UserDataRouter(apiGroup fiber.Router) {
 
 	// 獲取指定使用者全部的遊玩資料
 	userDataGroup.Get("/", middlware.TokenAuth(), func(c *fiber.Ctx) error {
-		return handlers.GetUserDataHandler(c)
+		return handlers.GetUserHasPlayedHandler(c)
 	})
 }

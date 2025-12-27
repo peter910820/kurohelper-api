@@ -11,9 +11,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 
-	kurohelperdb "github.com/peter910820/kurohelper-db"
-	"github.com/peter910820/kurohelper-db/models"
-	"github.com/peter910820/kurohelper-db/repository"
+	kurohelperdb "github.com/peter910820/kurohelper-db/v2"
 )
 
 func init() {
@@ -31,7 +29,7 @@ func init() {
 }
 
 func main() {
-	config := models.Config{
+	config := kurohelperdb.Config{
 		DBOwner:    os.Getenv("DB_OWNER"),
 		DBPassword: os.Getenv("DB_PASSWORD"),
 		DBName:     os.Getenv("DB_NAME"),
@@ -39,7 +37,7 @@ func main() {
 	}
 
 	kurohelperdb.InitDsn(config)
-	kurohelperdb.Migration() // 選填
+	// kurohelperdb.Migration(kurohelperdb.Dbs) // 選填
 
 	initTokenCache()
 
@@ -63,7 +61,7 @@ func main() {
 }
 
 func initTokenCache() {
-	webAPIToken, err := repository.GetWebAPIToken()
+	webAPIToken, err := kurohelperdb.GetWebAPIToken()
 	if err != nil {
 		logrus.Fatal(err)
 	}
