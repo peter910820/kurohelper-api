@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"kurohelper-api/handlers"
-	"kurohelper-api/middlware"
+	"api/handlers"
+	"api/middlware"
 
 	"github.com/gofiber/fiber/v2"
 )

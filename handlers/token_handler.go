@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"kurohelper-api/middlware"
+	"api/middlware"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
