@@ -1,9 +1,9 @@
 package main
 
 import (
+	"api/middlware"
+	"api/routes"
 	"fmt"
-	"kurohelper-api/middlware"
-	"kurohelper-api/routes"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -56,6 +56,7 @@ func main() {
 	// site route group
 	// routes.TokenRouter(apiGroup)
 	routes.UserDataRouter(apiGroup)
+	routes.BrandRouter(apiGroup)
 
 	logrus.Fatal(app.Listen(fmt.Sprintf("127.0.0.1:%s", os.Getenv("PRODUCTION_PORT"))))
 }
